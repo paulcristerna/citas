@@ -1,0 +1,110 @@
+<!-- Menú -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#/">
+        Citas en línea UAS
+      </a>
+    </div>
+      <a class="navbar-brand pull-right" href="#/">
+        DGVRI - UAS
+      </a>
+  </div>
+</nav>
+
+
+<div class="row background-theme">
+  <div class="col-md-offset-1 col-md-4 card">
+    
+    <!-- Encabezado -->
+
+    <h2 class="form-signin-heading">
+      <span class="glyphicon glyphicon-log-in"></span> 
+      Iniciar sesión
+    </h2>
+
+    <!-- Alerta -->
+
+    <div class="alert alert-{{ alertaLoginColor }} alert-dismissible" role="alert" ng-show="alertaLoginCuadro">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p class="text-center">
+          <span class="glyphicon glyphicon-{{ alertaLoginIcono }} "></span>
+          {{ alertaLoginTexto }}
+        </p>
+    </div>
+
+    <!-- Formulario para iniciar sesión -->
+
+    <form>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" class="form-control" ng-model="camposLogin.email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <label>Contraseña:</label>
+        <input type="password" class="form-control" ng-model="camposLogin.password" placeholder="Contraseña" required>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block " type="submit" ng-click="login(camposLogin)">
+        Ingresar
+        <span class="glyphicon glyphicon-log-in"></span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Formulario para registrar usuarios -->
+
+  <div class="col-md-5 col-md-offset-1 card">
+
+    <h2 class="form-signin-heading">
+      <span class="glyphicon glyphicon-check"></span>
+      Registrarse
+    </h2>
+
+    <!-- Alerta -->
+
+    <div class="alert alert-{{ alertaColor }} alert-dismissible" role="alert" ng-show="alertaCuadro">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p class="text-center">
+          <span class="glyphicon glyphicon-{{ alertaIcono }} "></span>
+          {{ alertaTexto }}
+        </p>
+    </div>
+
+    <form name="form">
+      <div class="form-group">
+        <label>Nombre: <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" ng-model="campos.nombre" placeholder="Nombre" required>
+      </div>
+      <div class="form-group">
+        <label>Apellido Paterno: <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" ng-model="campos.apellidoPaterno" placeholder="Apellido Paterno" required>
+      </div>
+      <div class="form-group">
+        <label>Apellido Materno:</label>
+        <input type="text" class="form-control" ng-model="campos.apellidoMaterno" placeholder="Apellido Materno">
+      </div>
+      <div class="form-group">
+        <label>Nombre del proyecto: <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" ng-model="campos.nombreProyecto" placeholder="Nombre del proyecto" required>
+      </div>
+      <div class="form-group">
+        <label>Email: <span class="text-danger">*</span></label>
+        <input type="email" class="form-control" ng-model="campos.email" placeholder="Email" required>
+      </div>
+      <div class="form-group">
+        <label>Contraseña: <span class="text-danger">*</span></label>
+        <input type="password" class="form-control" ng-model="campos.password" placeholder="Contraseña" required>
+      </div>
+      <div class="form-group">
+        <label>Repetir contraseña: <span class="text-danger">*</span></label>
+        <input type="password" class="form-control" ng-model="campos.repetirPassword" placeholder="Repetir contraseña" required>
+      </div>
+      <button class="btn btn-lg btn-success btn-block" type="submit" ng-click="agregar(campos)" ng-disabled="!form.$valid">
+        Registrarse
+        <span class="glyphicon glyphicon-check"></span>
+      </button>
+    </form>
+  </div>
+
+</div>

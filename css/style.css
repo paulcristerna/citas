@@ -1,0 +1,29 @@
+.text-upfirst:first-letter
+{
+	text-transform: uppercase;
+}
+
+.navbar-fixed-top
+{
+	padding: 0px 25px;
+}
+
+.background-theme
+{
+	background-image:url('../img/torre.jpg');
+	background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 750px;
+}
+
+.card
+{
+	background: white;
+	padding: 10px 30px 30px 30px;
+	margin-top: 15px;
+}
+
+.table-responsive
+{
+	min-height: 450px;
+}

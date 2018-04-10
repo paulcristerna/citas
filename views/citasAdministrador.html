@@ -1,0 +1,191 @@
+<!-- Menú -->
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/admin/citas">Citas en línea UAS</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <form class="navbar-form navbar-right">
+        <input type="text" class="form-control" placeholder="Buscar..." ng-model="buscar">
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active">
+          <a href="#/admin/citas">
+            <span class="glyphicon glyphicon-calendar"></span>
+            Citas
+          </a>
+        </li>
+        <li>
+          <a href="#/admin/usuarios">
+            <span class="glyphicon glyphicon-user"></span>
+            Usuarios
+          </a>
+        </li>
+        <li>
+          <a href="#/admin/administradores">
+            <span class="glyphicon glyphicon-wrench"></span>
+            Administradores
+          </a>
+        </li>
+        <li>
+          <a href="php/logout.php">
+            <span class="glyphicon glyphicon-wrench"></span>
+            Salir
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Encabezado -->
+
+<div class="row">
+  <div class="col-md-12 main">
+    <h1 class="page-header">
+      <span class="glyphicon glyphicon-calendar"></span>
+      Citas 
+      <small class="sub-header">
+        {{ citas.length }} elemento(s)
+      </small>
+      <span class="pull-right">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-show="botonAgregarCita" ng-click="limpiarCampos()">
+          <span class="glyphicon glyphicon-plus"></span>
+          Agregar cita 
+        </button>
+      </span>
+    </h1>
+
+    <!-- Alerta -->
+
+    <div class="alert alert-{{ alertaColor }} alert-dismissible" role="alert" ng-show="alertaCuadro">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p class="text-center">
+          <span class="glyphicon glyphicon-{{ alertaIcono }} "></span>
+          {{ alertaTexto }}
+        </p>
+    </div>
+
+    <!-- Listado -->
+    
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              <span class="glyphicon glyphicon-time"></span> 
+              Fecha de la cita
+            </th>
+            <th>
+              <span class="glyphicon glyphicon-user"></span> 
+              Nombre
+            </th>
+            <th>
+              <span class="glyphicon glyphicon-blackboard"></span> 
+              Proyecto
+            </th>
+            <th>
+              <span class="glyphicon glyphicon-transfer"></span> 
+              Estado
+            </th>
+            <th>
+              <span class="glyphicon glyphicon-list-alt"></span> 
+              Fecha de registro
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="citas.length == 0">
+            <td colspan="6" class="text-center">
+              <p>
+                No hay elementos registrados todavía.
+                <span class="glyphicon glyphicon-inbox"></span>
+              </p>
+            </td>
+          <tr>
+          <tr ng-repeat="cita in citas | filter: buscar">
+            <td>{{ cita.fecha | datetime }}</td>
+            <td class="text-capitalize">
+              {{ cita.nombre }} 
+              {{ cita.apellidoPaterno }} 
+              {{ cita.apellidoMaterno }}
+            </td>
+            <td class="text-upfirst">{{ cita.nombreProyecto }}</td>
+            <td class="text-upfirst" ng-if="cita.confirmacion == 1">
+              Esperando
+            </td>
+            <td class="text-upfirst" ng-if="cita.confirmacion == 2">
+              Confirmado
+            </td>
+            <td class="text-upfirst" ng-if="cita.confirmacion == 0">
+              Rechazado
+            </td>
+            <td>{{ cita.registro | datetime }}</td>
+            <td>
+              <button class="btn btn-success" data-toggle="modal" data-target="#myModal" ng-click="obtener(cita.id)">
+                Editar cita
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario -->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-hide="frmAgregarAdministrador">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+          <span class="glyphicon glyphicon-pencil"></span>
+          Editar cita 
+        </h4>
+      </div>
+      <div class="modal-body">
+
+        <form name="form" role="form">
+          <div class="form-group">
+            <label>Fecha <span class="text-danger">*</span></label>                  
+            <input type="text" class="form-control" id="dp1" placeholder="DD-MM-AAAA" ng-model="campos.fecha">
+          </div>
+          <div class="form-group">
+            <label>Hora <span class="text-danger">*</span></label>
+            <div class="clear"></div>                  
+            <input type="number" class="form-control pull-left" style="width:87px;" size="2" min="1" max="12" step="1" value="1" ng-model="campos.hora"> 
+            <input type="number" class="form-control pull-left" style="width:87px;" size="2" min="0" max="59" step="1" value="00" ng-model="campos.minutos">
+            <select class="form-control" style="width:90px;" ng-model="campos.horario">
+              <option>AM</option>
+              <option>PM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Acción <span class="text-danger">*</span></label>
+            <select class="form-control" ng-model="campos.confirmacion">
+              <option value="2">Confirmar</option>
+              <option value="0">Rechazar</option>
+            </select>
+          </div>
+        <button class="btn btn-success" type="submit" ng-disabled="!form.$valid" ng-click="editar(campos)">
+          <span class="glyphicon glyphicon-pencil"></span>
+          Editar cita
+        </button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/functions.js"></script>
